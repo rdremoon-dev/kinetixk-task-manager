@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kinetixk - The Task Manager</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css"
+    integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="img/profile-img.png" alt="">
+        <span class="logo-text">RD <i class="ri-arrow-down-s-line"></i></span>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#" class="nav-item" id="addTaskTrigger">
+          <span class="nav-icon"><i class="ri-add-circle-fill"></i></span>
+          Add task
+        </a>
+        <a href="#" class="nav-item"><span class="nav-icon"><i class="ri-search-line"></i></span>search</a>
+        <a href="#" class="nav-item active" id="inboxMenu"><span class="nav-icon"><i
+              class="ri-inbox-2-line"></i></span>inbox</a>
+        <a href="#" class="nav-item"><span class="nav-icon"><i class="ri-calendar-todo-line"></i></span>today</a>
+        <a href="#" class="nav-item"><span class="nav-icon"><i class="ri-calendar-todo-fill"></i></span>upcoming</a>
+        <a href="#" class="nav-item"><span class="nav-icon"><i class="ri-list-unordered"></i></span>filter & label</a>
+        <a href="#" class="nav-item"><span class="nav-icon"><i class="ri-folder-chart-line"></i></span>reporting</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <header>
+        <div class="icon-div">
+          <a href="#" class="header-item" id="displayToggle">
+            <span class="nav-icon"><i class="ri-todo-fill"></i></i></span>Completed Task
+          </a>
+          <a href="#" class="header-item"><span class="nav-icon"><i class="ri-chat-2-line"></i></span></a>
+          <a href="#" class="header-item"><span class="nav-icon"><i class="ri-more-line"></i></span></a>
+        </div>
+      </header>
+
+      <h1 style="margin-top: 20px;">Inbox</h1>
+
+      <div id="taskBoard" style="margin-top: 15px;"></div>
+    </main>
+  </div>
+
+  <div id="taskModal" class="modal-overlay hidden">
+    <div class="todoist-card">
+      <div class="input-section">
+        <input type="text" id="taskInput" placeholder="Schedule review by Mar 15 at 11am p1" autocomplete="off">
+        <input type="text" id="taskDesc" placeholder="Description" class="desc-input">
+      </div>
+
+      <div class="action-row">
+        <div class="dropdown-wrapper">
+          <button id="dateBtn" class="badge-btn"><i class="ri-calendar-line"></i> <span
+              id="dateText">Date</span></button>
+          <div id="dateDropdown" class="custom-dropdown hidden">
+            <input type="text" id="customDateInput" placeholder="Type a date" class="dropdown-search">
+            <div class="dropdown-item" data-date="today"><i class="ri-calendar-check-line text-green"></i> Today <span
+                class="right-text">Wed</span></div>
+            <div class="dropdown-item" data-date="tomorrow"><i class="ri-sun-line text-orange"></i> Tomorrow <span
+                class="right-text">Thu</span></div>
+            <div class="dropdown-item" data-date="weekend"><i class="ri-lightbulb-line text-blue"></i> This weekend
+              <span class="right-text">Sat</span></div>
+            <div class="dropdown-item" data-date="nextweek"><i class="ri-arrow-right-line text-purple"></i> Next week
+              <span class="right-text">Mon</span></div>
+
+            <div class="dropdown-item" data-date="nextmonth">
+
+            </div>
+
+            <div
+              style="padding: 8px 12px; border-top: 1px solid #eee; display: flex; flex-direction: column; gap: 8px;">
+              <label style="font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase;">Time &
+                Repeat</label>
+              <div style="display: flex; gap: 8px;">
+                <input type="time" id="taskTimeInput"
+                  style="padding: 4px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; width: 50%;">
+                <select id="taskRepeatSelect"
+                  style="padding: 4px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px; width: 50%;">
+                  <option value="none">No Repeat</option>
+                  <option value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="dropdown-wrapper">
+          <button id="priorityBtn" class="badge-btn"><i class="ri-flag-line"></i> <span
+              id="priorityText">Priority</span></button>
+          <div id="priorityDropdown" class="custom-dropdown hidden">
+            <div class="dropdown-item" data-priority="1"><i class="ri-flag-fill" style="color: #de4c4a;"></i> Priority 1
+            </div>
+            <div class="dropdown-item" data-priority="2"><i class="ri-flag-fill" style="color: #ff9a00;"></i> Priority 2
+            </div>
+            <div class="dropdown-item" data-priority="3"><i class="ri-flag-fill" style="color: #246fe0;"></i> Priority 3
+            </div>
+            <div class="dropdown-item" data-priority="4"><i class="ri-flag-line" style="color: #666;"></i> Priority 4
+            </div>
+          </div>
+        </div>
+
+        <div class="dropdown-wrapper">
+          <button id="attachmentBtn" class="badge-btn"><i class="ri-attachment-line"></i> <span
+              id="attachmentText">Attachment</span></button>
+          <input type="file" id="fileInput" style="display: none;">
+        </div>
+
+        <div class="dropdown-wrapper">
+          <button id="reminderBtn" class="badge-btn"><i class="ri-notification-line"></i> <span
+              id="reminderText">Reminders</span></button>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="footer-row">
+        <div class="project-selector">
+          <select id="projectSelect">
+            <option value="inbox">📥 Inbox</option>
+          </select>
+        </div>
+        <div class="auth-buttons">
+          <button id="cancelBtn" class="btn-cancel">Cancel</button>
+          <button id="saveTaskBtn" class="btn-add" disabled>Add task</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
